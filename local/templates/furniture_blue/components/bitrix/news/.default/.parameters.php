@@ -9,5 +9,10 @@ $arTemplateParameters = array(
 		"VALUE" => "Y",
 		"DEFAULT" =>"N",
 	),
+	"ID_INFOBLOCK_REL_CANONICAL" => Array(
+		"NAME" => GetMessage("ID_INFOBLOCK_REL_CANONICAL"),
+		"TYPE" => "TEXT",
+		"VALUE" => "",
+	),
 );
 ?>

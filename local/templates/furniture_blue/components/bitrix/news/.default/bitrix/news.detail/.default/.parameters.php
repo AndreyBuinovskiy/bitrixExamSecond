@@ -22,5 +22,10 @@ $arTemplateParameters = array(
 		"TYPE" => "CHECKBOX",
 		"DEFAULT" => "Y",
 	),
+	"ID_INFOBLOCK_REL_CANONICAL" => Array(
+		"NAME" => GetMessage("ID_INFOBLOCK_REL_CANONICAL"),
+		"TYPE" => "TEXT",
+		"VALUE" => "",
+	),
 );
 ?>
