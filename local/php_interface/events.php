@@ -25,3 +25,35 @@ class ElementUpdate
         }
     }
 }
+
+AddEventHandler("main", "OnBeforeEventAdd", array("EventAdd", "OnBeforeEventAddHandler"));
+class EventAdd
+{
+	function OnBeforeEventAddHandler(&$event, &$lid, &$arFields)
+	{
+        if($event == "FEEDBACK_FORM"){
+            global  $USER;
+            if($USER->IsAuthorized()){
+                $arFields["AUTHOR"] = GetMessage('IS_AUTHORISE',
+                                                 array(
+                                                       '#USER_ID#' => $USER->GetID(),
+                                                       '#USER_LOGIN#' => $USER->GetLogin(),
+                                                       '#USER_NAME#' => $USER->GetFirstName(),
+                                                       '#AUTHOR#' => $arFields["AUTHOR"]
+                                                    )
+                                                 );
+            }else{
+                $arFields["AUTHOR"] = GetMessage('NOT_AUTHORISE', array('#AUTHOR#' => $arFields["AUTHOR"]));
+            }
+            
+            CEventLog::Add(array(
+                "SEVERITY" => "EVENT",
+                "AUDIT_TYPE_ID" => "AUTHOR",
+                "MODULE_ID" => "main",
+                "DESCRIPTION" => $arFields["AUTHOR"],
+            ));
+            
+        }
+        
+	}
+}
