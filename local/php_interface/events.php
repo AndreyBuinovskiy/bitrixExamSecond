@@ -57,3 +57,26 @@ class EventAdd
         
 	}
 }
+
+AddEventHandler("main", "OnBuildGlobalMenu", "OnBuildGlobalMenuEventHendler");
+
+function OnBuildGlobalMenuEventHendler(&$aGlobalMenu, &$aModuleMenu){
+     global $USER;
+     if($USER->IsAdmin())
+      return;
+    
+    
+    $userGroup = CUser::GetUserGroup($USER->GetId());
+    if(!in_array(5, $userGroup)){
+       return;
+    }
+    
+
+    unset($aGlobalMenu['global_menu_desktop']);
+    foreach($aModuleMenu as $key=>$item){
+        if($item['text'] == "Инфоблоки"){
+            unset($aModuleMenu[$key]);
+        }
+    }
+    
+}
