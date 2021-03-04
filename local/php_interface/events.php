@@ -80,3 +80,24 @@ function OnBuildGlobalMenuEventHendler(&$aGlobalMenu, &$aModuleMenu){
     }
     
 }
+
+
+//инструмент СЕО специалиста
+AddEventHandler("main", "OnEpilog", "functionOnEpilog");
+function functionOnEpilog(){
+    
+    if(!CModule::includeModule('iblock')){
+        return;
+    }
+    
+    global $APPLICATION;
+    
+    $arSelect = Array("ID", "NAME", "PROPERTY_TITLE", "PROPERTY_DESCRIPTION");
+    $arFilter = Array("IBLOCK_ID"=>6, "=NAME"=>$APPLICATION->GetCurPage(), "ACTIVE"=>"Y");
+    $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+    if($ob = $res->GetNext())
+    {
+        $APPLICATION->SetTitle($ob["PROPERTY_TITLE_VALUE"]);
+        $APPLICATION->SetPageProperty('description', $ob["PROPERTY_DESCRIPTION_VALUE"]);
+    }
+}
